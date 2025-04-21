@@ -1,30 +1,21 @@
-{ config, lib, ... }:
+{ config, ... }:
 
-let
-  cfg = config.phoenix.desktop;
-in
 {
-  options.phoenix.desktop = {
-    
-  };
+  imports = [
+    ./gnome
+    ./hyprland
+    ./plasma
+  ];
 
-  config = lib.mkMerge [
+  assertions = [
     {
-      
+      assertion =
+        (lib.count (x: x) [
+          config.phoenix.desktop.gnome.enable
+          config.phoenix.desktop.plasma.enable
+          config.phoenix.desktop.hyprland.enable
+        ]) < 2;
+      message = "At most 1 DE/WM is allowed";
     }
-    (lib.mkIf cfg.gnome.enable {
-      services.xserver.displayManager.gdm.enable = true;
-      services.xserver.desktopManager.gnome.enable = true;
-    })
-    (lib.mkIf cfg.plasma.enable {
-      services.displayManager.sddm.enable = true;
-      services.desktopManager.plasma6.enable = true;
-    })
-    (lib.mkIf cfg.hyprland.enable {
-      programs.hyprland = {
-        enable = true;
-        withUWSM = true;
-      };
-    })
   ];
 }
