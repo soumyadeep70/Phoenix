@@ -6,16 +6,17 @@ let
     };
   };
   lib = pkgs.lib;
+
+  p-lib = import ./lib { inherit lib; };
 in
-builtins.elemAt
-  (lib.mkMerge [
-    {
-      a = 2;
-      b = [ "hi" ];
-    }
-    {
-      b = [ "hello" ];
-      c = 0;
-    }
-  ]).contents
-  1
+builtins.fromJSON ''
+  {
+    "editor": "nvim",
+    "theme": "dark",
+    "autosave": true,
+    "plugins": [
+      { "name": "lsp", "enabled": true },
+      { "name": "tree-sitter", "enabled": true }
+    ]
+  }
+''
