@@ -55,9 +55,9 @@ in
     };
   };
 
-  config = lib.mkIf ((builtins.length cfg.usernames) > 0) {
+  config = {
     networking.hostName = cfg.host;
-    users.mutableUsers = false;
+    users.mutableUsers = true;
     users.users = cfg.users;
   };
 }

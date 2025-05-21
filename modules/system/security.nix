@@ -59,7 +59,7 @@ in
     })
     (lib.mkIf cfg.enableRealtimeScheduling {
       security.rtkit.enable = true;
-      users.users = lib.genAttrs config.phoenix.user.usernames (name: {
+      users.users = lib.genAttrs config.phoenix.identity.usernames (name: {
         extraGroups = [ "realtime" ];
       });
     })

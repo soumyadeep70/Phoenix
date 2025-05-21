@@ -17,11 +17,13 @@
     kernelVariant = pkgs.linuxKernel.packages.linux_xanmod_latest;
   };
 
-  phoenix.system.hardware.gpu.specs = {
-    intel = {
-      codename = "KBL";
-      pciDeviceId = "5916";
-    };
+  phoenix.system.hardware.gpu = {
+    intel = [
+      {
+        codename = "KBL";
+        pciDeviceId = "5916";
+      }
+    ];
   };
 
   phoenix.system.security = {
@@ -29,4 +31,6 @@
   };
 
   phoenix.system.desktop.plasma.enable = true;
+
+  phoenix.profile.development.enable = true;
 }

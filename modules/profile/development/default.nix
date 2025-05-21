@@ -1,6 +1,7 @@
 {
   config,
   lib,
+  pkgs,
   ...
 }:
 let
@@ -14,17 +15,24 @@ in
       description = "Enable development profile";
       example = true;
     };
+    editor = {
+      enableZed = lib.mkOption {
+        type = lib.types.bool;
+        default = true;
+        description = "Enable development profile";
+        example = true;
+      };
+    };
   };
 
   config.specialisation.development.configuration = lib.mkIf cfg.enable {
     home-manager.users = lib.genAttrs config.phoenix.identity.usernames (name: {
       home.packages = [
-        zed-editor-fhs
-        jetbrains.clion
-        jetbrains.idea-ultimate
-        jetbrains.pycharm-professional
-        android-studio
-      ];
+        # jetbrains.clion
+        # jetbrains.idea-ultimate
+        # jetbrains.pycharm-professional
+        # android-studio
+      ] ++ lib.optional cfg.editor.enableZed pkgs.zed-editor-fhs;
     });
   };
 }

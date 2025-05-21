@@ -1,13 +1,19 @@
-{ config, lib, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 {
+  environment.systemPackages = [
+    (pkgs.writeShellScriptBin "switch-profile" ''
+      #!/usr/bin/env bash
+
+    '')
+  ];
+
   home-manager.users = lib.genAttrs config.phoenix.identity.usernames (name: {
-    home.packages = [
-      zed-editor-fhs
-      jetbrains.clion
-      jetbrains.idea-ultimate
-      jetbrains.pycharm-professional
-      android-studio
-    ];
+    programs.firefox.enable = true;
   });
 }
