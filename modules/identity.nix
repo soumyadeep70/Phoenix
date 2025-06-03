@@ -34,6 +34,11 @@ in
               readOnly = true;
               visible = false;
             };
+            extraGroups = lib.mkOption {
+              type = lib.types.listOf lib.types.str;
+              default = [ "wheel" ];
+              description = "Extra user groups -- wheel stands for sudo permission";
+            };
           };
         }
       );

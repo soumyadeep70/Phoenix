@@ -32,5 +32,8 @@
 
   phoenix.system.desktop.plasma.enable = true;
 
-  phoenix.profile.development.enable = true;
+  phoenix.profile = {
+    development.enable = true;
+    gaming.enable = true;
+  };
 }

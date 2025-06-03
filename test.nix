@@ -9,14 +9,4 @@ let
 
   p-lib = import ./lib { inherit lib; };
 in
-builtins.fromJSON ''
-  {
-    "editor": "nvim",
-    "theme": "dark",
-    "autosave": true,
-    "plugins": [
-      { "name": "lsp", "enabled": true },
-      { "name": "tree-sitter", "enabled": true }
-    ]
-  }
-''
+builtins.toString ./modules

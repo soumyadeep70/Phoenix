@@ -1,10 +1,15 @@
 {
   config,
   lib,
+  phoenix-lib,
   ...
 }:
 let
   cfg = config.phoenix.system.desktop.plasma;
+
+  styles = builtins.map (
+    file: lib.removeSuffix ".nix" (lib.removePrefix ((builtins.toString ./styles) + "/") file)
+  ) (phoenix-lib.files.getFiles ./styles);
 in
 {
   options.phoenix.system.desktop.plasma = {
@@ -13,6 +18,12 @@ in
       default = false;
       description = "Enable KDE Plasma (Desktop Environment)";
       example = true;
+    };
+    style = lib.mkOption {
+      type = lib.types.enum styles;
+      default = "modern";
+      description = "Select which style to apply";
+      example = builtins.tail styles;
     };
   };
 

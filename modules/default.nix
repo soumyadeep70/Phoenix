@@ -6,9 +6,13 @@
   ...
 }:
 {
-  imports = builtins.filter (
-    filePath: lib.strings.hasSuffix ".nix" filePath && filePath != (builtins.toString ./default.nix)
-  ) (phoenix-lib.files.getFilesRecursive ./.);
+  imports =
+    [
+      inputs.home-manager.nixosModules.home-manager
+    ]
+    ++ builtins.filter (
+      filePath: lib.strings.hasSuffix ".nix" filePath && filePath != (builtins.toString ./default.nix)
+    ) (phoenix-lib.files.getFilesRecursive ./.);
 
   home-manager = {
     useGlobalPkgs = true;
@@ -17,7 +21,9 @@
     extraSpecialArgs = {
       inherit inputs;
     };
-    sharedModules = [ inputs.plasma-manager.homeManagerModules.plasma-manager ];
+    sharedModules = [
+      inputs.plasma-manager.homeManagerModules.plasma-manager
+    ];
   };
 
   home-manager.users = lib.genAttrs config.phoenix.identity.usernames (name: {
